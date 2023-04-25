@@ -1,39 +1,44 @@
-FROM ubuntu:16.04
-
-MAINTAINER Lilia Sfaxi <liliasfaxi@gmail.com>
+FROM ubuntu:latest
 
 WORKDIR /root
 
-# install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget vim
+# install requisites
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk ssh pdsh wget curl vim python3
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+RUN python3 get-pip.py
+RUN python3 -m pip install --upgrade pip setuptools wheel
 
-# install hadoop 2.7.2
-RUN wget https://github.com/kiwenlau/compile-hadoop/releases/download/2.7.2/hadoop-2.7.2.tar.gz && \
-    tar -xzvf hadoop-2.7.2.tar.gz && \
-    mv hadoop-2.7.2 /usr/local/hadoop && \
-    rm hadoop-2.7.2.tar.gz
+# Install Hadoop
+RUN wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.5.tar.gz && \
+    tar -xzf hadoop-3.3.5.tar.gz && \
+    mv hadoop-3.3.5 /usr/local/hadoop && \
+    rm hadoop-3.3.5.tar.gz
 
-# install spark
-RUN wget https://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz && \
-    tar -xvf spark-2.2.0-bin-hadoop2.7.tgz && \
-    mv spark-2.2.0-bin-hadoop2.7 /usr/local/spark && \
-    rm spark-2.2.0-bin-hadoop2.7.tgz
+# Install Spark
+RUN wget https://dlcdn.apache.org/spark/spark-3.4.0/spark-3.4.0-bin-hadoop3.tgz && \
+    tar -xzf spark-3.4.0-bin-hadoop3.tgz && \
+    mv spark-3.4.0-bin-hadoop3 /usr/local/spark && \
+    rm spark-3.4.0-bin-hadoop3.tgz
 
-# install kafka
-RUN wget https://archive.apache.org/dist/kafka/1.0.2/kafka_2.11-1.0.2.tgz && \
-    tar -xzvf kafka_2.11-1.0.2.tgz && \
-    mv kafka_2.11-1.0.2 /usr/local/kafka && \
-    rm kafka_2.11-1.0.2.tgz
+# Install pyspark
+RUN pip install pyspark 
 
-# install hbase
-RUN wget https://archive.apache.org/dist/hbase/1.4.9/hbase-1.4.9-bin.tar.gz  && \ 
-    tar -zxvf hbase-1.4.9-bin.tar.gz && \
-    mv hbase-1.4.9 /usr/local/hbase && \
-    rm hbase-1.4.9-bin.tar.gz
+# Install Kafka
+RUN wget https://dlcdn.apache.org/kafka/3.4.0/kafka_2.13-3.4.0.tgz && \
+    tar -xzf kafka_2.13-3.4.0.tgz && \
+    mv kafka_2.13-3.4.0 /usr/local/kafka && \
+    rm kafka_2.13-3.4.0.tgz
 
-# copy the test files
-RUN wget https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EWdosZTuyDtEiqcjpqbY_loBlfQbIQWp8Zq7PPKSAE1sjQ?e=O3TNLR && \ 
-    wget  https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EexZfjSnlShAqDig-0efjbkBJRiHqN0POQt0t4fvXhb7Dw?e=af6lAZ
+# Install HBase
+RUN wget https://dlcdn.apache.org/hbase/2.4.17/hbase-2.4.17-bin.tar.gz && \ 
+    tar -xzf hbase-2.4.17-bin.tar.gz && \
+    mv hbase-2.4.17 /usr/local/hbase && \
+    rm hbase-2.4.17-bin.tar.gz
+
+
+# # copy the test files
+# RUN wget https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EWdosZTuyDtEiqcjpqbY_loBlfQbIQWp8Zq7PPKSAE1sjQ?e=O3TNLR && \ 
+#     wget  https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EexZfjSnlShAqDig-0efjbkBJRiHqN0POQt0t4fvXhb7Dw?e=af6lAZ
 
 
 # set environment variables
@@ -48,8 +53,9 @@ ENV CLASSPATH=$CLASSPATH:/usr/local/hbase/lib/*
 ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/spark/bin:/usr/local/kafka/bin:/usr/local/hbase/bin 
 
 # ssh without key
-RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
-    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && \
+    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && \
+    chmod 0600 ~/.ssh/authorized_keys
 
 RUN mkdir -p ~/hdfs/namenode && \
     mkdir -p ~/hdfs/datanode && \
@@ -81,5 +87,4 @@ RUN chmod +x ~/start-hadoop.sh && \
 RUN /usr/local/hadoop/bin/hdfs namenode -format
 
 CMD [ "sh", "-c", "service ssh start; bash"]
-
 
