@@ -3,10 +3,11 @@ FROM ubuntu:latest
 WORKDIR /root
 
 # install requisites
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk ssh pdsh wget curl vim python3
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk ssh wget curl vim python3
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 RUN python3 get-pip.py
 RUN python3 -m pip install --upgrade pip setuptools wheel
+RUN rm get-pip.py
 
 # Install Hadoop
 RUN wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.5.tar.gz && \
@@ -39,7 +40,8 @@ RUN wget https://dlcdn.apache.org/hbase/2.4.17/hbase-2.4.17-bin.tar.gz && \
 # # copy the test files
 # RUN wget https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EWdosZTuyDtEiqcjpqbY_loBlfQbIQWp8Zq7PPKSAE1sjQ?e=O3TNLR && \ 
 #     wget  https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EexZfjSnlShAqDig-0efjbkBJRiHqN0POQt0t4fvXhb7Dw?e=af6lAZ
-
+# copy files
+RUN mv /tmp/files/* ~/ 
 
 # set environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 
