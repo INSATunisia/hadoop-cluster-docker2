@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
-/**
- *
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -20,23 +19,34 @@
  * limitations under the License.
  */
 -->
-<configuration>	  
-	   <property>
-	      <name>hbase.zookeeper.property.dataDir</name>
-	      <value>/root/hdfs/zookeeper-files</value>
-	   </property>
-
-	   <property>
-		   <name>hbase.cluster.distributed</name>
-		   <value>true</value>
-		</property>
-
-		<property>
-            <name>hbase.rootdir</name>
-            <value>hdfs://hadoop-master:9000/hbase</value>
-        </property>
+<configuration>
+    <property>
+        <name>hbase.zookeeper.property.dataDir</name>
+        <value>/usr/local/zookeeper</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+        <value>localhost</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.property.dataDir</name>
+        <value>/tmp/zookeeper</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.property.clientPort</name>
+        <value>2182</value>
+    </property>
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hbase.rootdir</name>
+        <value>hdfs://hadoop-master:9000/hbase</value>
+	</property>
 	<property>
-      		<name>hbase.zookeeper.quorum</name>
-      		<value>hadoop-master</value>
+  		<name>hbase.wal.provider</name>
+  		<value>filesystem</value>
 	</property>
 </configuration>
+
