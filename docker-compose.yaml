@@ -14,6 +14,7 @@ services:
       - "9092:9092"   # Kafka producer uses port 9092 to communicate with Kafka broker
       - "2181:2181"   # Allow Kafka producer running on the host to connect to ZooKeeper running inside the container
       - "9000:9000"   # HDFS port
+      - "8080:8080"   # to connect with REST service
     networks:
       - hadoop
 

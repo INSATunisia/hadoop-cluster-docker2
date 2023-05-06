@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk ssh wget c
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3 get-pip.py && \
     rm get-pip.py && \
-    python3 -m pip install --upgrade pip setuptools happybase
+    python3 -m pip install --upgrade pip setuptools
 
 # Install Hadoop
 RUN wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.5.tar.gz && \
@@ -47,7 +47,7 @@ RUN wget https://dlcdn.apache.org/hbase/2.4.17/hbase-2.4.17-bin.tar.gz && \
 # RUN wget https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EWdosZTuyDtEiqcjpqbY_loBlfQbIQWp8Zq7PPKSAE1sjQ?e=O3TNLR && \ 
 #     wget  https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EexZfjSnlShAqDig-0efjbkBJRiHqN0POQt0t4fvXhb7Dw?e=af6lAZ
 # copy files
-RUN mv /tmp/files/* ~/ 
+# RUN mv /tmp/files/* ~/ 
 
 # set environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 
@@ -80,7 +80,7 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml && \
     mv /tmp/mapred-site.xml $HADOOP_HOME/etc/hadoop/mapred-site.xml && \
     mv /tmp/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml && \
-    mv /tmp/slaves $HADOOP_HOME/etc/hadoop/slaves && \
+    mv /tmp/workers $HADOOP_HOME/etc/hadoop/workers && \
     mv /tmp/start-kafka-zookeeper.sh ~/start-kafka-zookeeper.sh && \
     mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
     mv /tmp/run-wordcount.sh ~/run-wordcount.sh && \
