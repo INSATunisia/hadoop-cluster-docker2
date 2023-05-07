@@ -29,12 +29,8 @@
         <value>localhost</value>
     </property>
     <property>
-        <name>hbase.zookeeper.property.dataDir</name>
-        <value>/tmp/zookeeper</value>
-    </property>
-    <property>
         <name>hbase.zookeeper.property.clientPort</name>
-        <value>2182</value>
+        <value>2181</value>
     </property>
     <property>
         <name>hbase.cluster.distributed</name>
