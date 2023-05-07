@@ -9,19 +9,19 @@ if (ratings.exists()):
     ratings.drop()
 ratings.create('rating')
 
-ratingFile = open("./merged_data.csv")
+ratingFile = open("./ml-latest-small/ratings.csv")
 
 
 
 
 batch = ratings.batch()
 
-#movieId,title,genre,userId,rating,timestamp
 
+#userId,movieId,rating,timestamp
 for line in ratingFile:
     values = line.split(',')
-    if (len(values)==6):
-        batch.update(values[3], {'rating': {values[1]: values[4]}}, timestamp=values[5])
+    if (len(values)==4):
+        batch.update(values[0], {'rating': {values[1]: values[2]}}, timestamp=values[3])
     else:
         # batch.update(values[0], {'infos': {values[-4]: values[1]+values[2]},'rating': {values[-3]: values[-2]}}, timestamp=values[-1])
         continue
