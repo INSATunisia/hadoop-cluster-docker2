@@ -22,6 +22,13 @@ RUN wget https://dlcdn.apache.org/spark/spark-3.4.0/spark-3.4.0-bin-hadoop3.tgz 
     mv spark-3.4.0-bin-hadoop3 /usr/local/spark && \
     rm spark-3.4.0-bin-hadoop3.tgz
 
+# Install zeppelin
+RUN wget https://dlcdn.apache.org/zeppelin/zeppelin-0.10.1/zeppelin-0.10.1-bin-netinst.tgz && \
+    tar -xzf zeppelin-0.10.1-bin-netinst.tgz && \
+    mv zeppelin-0.10.1-bin-netinst /usr/local/zeppelin && \
+    rm zeppelin-0.10.1-bin-netinst.tgz
+
+
 # Install pyspark
 RUN pip install pyspark 
 

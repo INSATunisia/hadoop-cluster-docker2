@@ -58,7 +58,7 @@ if (user_recommendations.exists()):
     print('Dropping existing user_recommendations table\n')
     user_recommendations.drop()
 
-user_recommendations.create('movie')
+user_recommendations.create('user_recommendations')
 
 # Convert the DataFrame to an rdd
 rdd = userRecs.rdd.map(lambda row: (row["userId"], {"recommendations": row["recommendations"]}))
