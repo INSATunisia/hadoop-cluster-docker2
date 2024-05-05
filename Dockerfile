@@ -11,35 +11,27 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3 -m pip install --upgrade pip setuptools
 
 # Install Hadoop
-RUN wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.6.tar.gz && \
+RUN wget https://archive.apache.org/dist/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz && \
     tar -xzf hadoop-3.3.6.tar.gz && \
     mv hadoop-3.3.6 /usr/local/hadoop && \
     rm hadoop-3.3.6.tar.gz
 
 # Install Spark
-RUN wget https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz && \
+RUN wget https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz && \ 
     tar -xzf spark-3.5.0-bin-hadoop3.tgz && \
     mv spark-3.5.0-bin-hadoop3 /usr/local/spark && \
     rm spark-3.5.0-bin-hadoop3.tgz
 
-# Install zeppelin
-RUN wget https://dlcdn.apache.org/zeppelin/zeppelin-0.10.1/zeppelin-0.10.1-bin-netinst.tgz && \
-    tar -xzf zeppelin-0.10.1-bin-netinst.tgz && \
-    mv zeppelin-0.10.1-bin-netinst /usr/local/zeppelin && \
-    rm zeppelin-0.10.1-bin-netinst.tgz
-
-
-# Install pyspark
 RUN pip install pyspark
 
 # Install Kafka
-RUN wget https://dlcdn.apache.org/kafka/3.6.1/kafka_2.13-3.6.1.tgz && \
+RUN wget https://archive.apache.org/dist/kafka/3.6.1/kafka_2.13-3.6.1.tgz && \ 
     tar -xzf kafka_2.13-3.6.1.tgz && \
     mv kafka_2.13-3.6.1 /usr/local/kafka && \
     rm kafka_2.13-3.6.1.tgz
 
 # Install HBase
-RUN wget https://dlcdn.apache.org/hbase/2.5.8/hbase-2.5.8-hadoop3-bin.tar.gz && \
+RUN wget https://downloads.apache.org/hbase/2.5.8/hbase-2.5.8-hadoop3-bin.tar.gz && \
     tar -xzf hbase-2.5.8-hadoop3-bin.tar.gz && \
     mv hbase-2.5.8-hadoop3 /usr/local/hbase && \
     rm hbase-2.5.8-hadoop3-bin.tar.gz
