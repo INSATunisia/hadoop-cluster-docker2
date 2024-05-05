@@ -3,7 +3,7 @@ name: Build and Push Docker Images
 on:
   push:
     branches:
-      - main  # or the name of your default branch
+      - alaeddine
 
 jobs:
   build:
